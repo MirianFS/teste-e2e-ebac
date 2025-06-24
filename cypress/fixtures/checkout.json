@@ -1,0 +1,13 @@
+{
+  "nome": "Aline",
+  "sobrenome":"Santos",
+  "empresa": "Nome Empoesa",
+  "pais": "Brasil",
+  "primeiroEndereco": "Primeiro Endereço",
+  "segundoEndereco": "Segundo Endereço",
+  "cidade": "Campinas",
+  "estado": "São Paulo",
+  "cep": "74684-572",
+  "telefone": "119999-9999",
+  "email": "teste@teste.com"
+}

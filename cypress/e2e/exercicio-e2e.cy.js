@@ -1,22 +1,43 @@
 /// <reference types="cypress" />
+import loginPage from "../support/page_objects/login.page";
+import produtosPage from "../support/page_objects/produtos.page";
+import checkoutPage from "../support/page_objects/checkout.page";
 
 context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
-  /*  Como cliente 
-      Quero acessar a Loja EBAC 
-      Para fazer um pedido de 4 produtos 
-      Fazendo a escolha dos produtos
-      Adicionando ao carrinho
-      Preenchendo todas opções no checkout
-      E validando minha compra ao final */
-
   beforeEach(() => {
-      cy.visit('/')
+      loginPage.visitarUrl()
   });
 
   it('Deve fazer um pedido na loja Ebac Shop de ponta a ponta', () => {
-      //TODO: Coloque todo o fluxo de teste aqui, considerando as boas práticas e otimizações
-      
+    cy.fixture('perfil').then(dados =>{
+        loginPage.preencherLogin(dados.nome, dados.usuario, dados.senha)
+        loginPage.clicarComprar()
+    })
+    cy.fixture('produto').then(dados => {
+        produtosPage.visitarUrl()
+        produtosPage.buscarProduto(dados.produto)
+        cy.get('.product_title').should('contain', dados.produto)
+        produtosPage.addProdutoCarrinho(dados.tamanho, dados.cor, dados.quantidade)
+        cy.get('.woocommerce-message').should('contain',`${dados.quantidade} × “${dados.produto}” foram adicionados no seu carrinho.`)
+        produtosPage.clicarCarrinho()
+        produtosPage.clicarCheckout()
+    })
+    cy.fixture('checkout').then(dados => {
+        checkoutPage.preencherDetalhesFatura(
+            dados.nome, 
+            dados.sobrenome, 
+            dados.empresa, 
+            dados.pais, 
+            dados.primeiroEndereco, 
+            dados.segundoEndereco, 
+            dados.cidade, 
+            dados.estado, 
+            dados.cep, 
+            dados.telefone, 
+            dados.email)
+        checkoutPage.clicarTermo()
+        checkoutPage.clicarFinalizarCompra()
+    })
   });
-
 
 })
