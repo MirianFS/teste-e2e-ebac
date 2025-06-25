@@ -38,6 +38,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         checkoutPage.clicarTermo()
         checkoutPage.clicarFinalizarCompra()
     })
+    cy.get('.woocommerce-notice').should('contain', 'Obrigado. Seu pedido foi recebido.')
   });
 
 })
