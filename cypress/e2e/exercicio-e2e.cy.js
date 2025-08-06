@@ -18,7 +18,7 @@ context('Exercicio - Testes End-to-end - Fluxo de pedido', () => {
         produtosPage.buscarProduto(dados.produto)
         cy.get('.product_title').should('contain', dados.produto)
         produtosPage.addProdutoCarrinho(dados.tamanho, dados.cor, dados.quantidade)
-        cy.get('.woocommerce-message').should('contain',`${dados.quantidade} × “${dados.produto}” foram adicionados no seu carrinho.`)
+        cy.get('.woocommerce-message').should('contain',`“${dados.produto}” foi adicionado no seu carrinho.`)
         produtosPage.clicarCarrinho()
         produtosPage.clicarCheckout()
     })
